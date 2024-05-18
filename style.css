@@ -1,0 +1,43 @@
+/* styles.css */
+body {
+    display: flex;
+    background-color: lightgray;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+button {
+    margin: 3px;
+}
+
+.butts {
+    margin-top: 10px;
+}
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+    user-select: none;
+    text-transform: uppercase;
+}
+
+td {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.selected {
+    background-color: green;
+}

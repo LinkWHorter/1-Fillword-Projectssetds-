@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="center-container">
+        <label for="sizeInput">Введите одно число X (для Х столбцов, Х рядов):</label>
+        <input type="number" id="sizeInput" min="1">
+        <button id="createTable">Создать таблицу</button>
+        <button id="clearTable">Очистить таблицу</button>
+    </div>
+    <div id="tableContainer"></div>
+    <button id="autoFill" class="center-container butts">Автозаполнение пустых ячеек</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
