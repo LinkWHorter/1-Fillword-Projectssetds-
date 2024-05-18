@@ -2,6 +2,7 @@
 document.getElementById('createTable').addEventListener('click', createTable);
 document.getElementById('clearTable').addEventListener('click', clearTable);
 document.getElementById('autoFill').addEventListener('click', autoFillEmptyCells);
+document.getElementById('downloadImage').addEventListener('click', downloadTableImage);
 document.addEventListener('keypress', handleKeyPress);
 document.addEventListener('mousedown', handleMouseDownOutsideTable);
 
@@ -121,6 +122,36 @@ function autoFillEmptyCells() {
         if (!cell.textContent) {
             const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
             cell.textContent = randomChar;
+        }
+    });
+}
+
+function downloadTableImage() {
+    const tableContainer = document.getElementById('tableContainer');
+    
+    // Используем html2canvas для создания изображения
+    html2canvas(tableContainer, {
+        scale: 15, // Увеличиваем разрешение в 15 раз
+        onrendered: function(canvas) {
+            canvas.toBlob(function(blob) {
+                // Создаем ссылку на Blob
+                const url = window.URL.createObjectURL(blob);
+
+                // Создаем ссылку для скачивания
+                const link = document.createElement('a');
+                link.download = 'table.png';
+                link.href = url;
+
+                // Добавляем ссылку на страницу и эмулируем клик
+                document.body.appendChild(link);
+                link.click();
+
+                // Удаляем ссылку из DOM
+                document.body.removeChild(link);
+
+                // Освобождаем ресурсы Blob
+                window.URL.revokeObjectURL(url);
+            });
         }
     });
 }

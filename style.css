@@ -23,18 +23,25 @@ button {
     margin-bottom: 20px;
 }
 
+#tableContainer {
+    overflow: auto; /* Добавление полос прокрутки при необходимости */
+    min-width: 300px; /* Минимальная ширина таблицы */
+    max-width: 100%; /* Ширина таблицы не будет превышать ширину экрана */
+}
+
 table {
     border-collapse: collapse;
     margin-top: 20px;
     background-color: white;
     user-select: none;
     text-transform: uppercase;
+    border: 2px solid black;
 }
 
 td {
     width: 30px;
     height: 30px;
-    border: 1px solid black;
+    border: 2px solid darkgray;
     text-align: center;
     vertical-align: middle;
 }

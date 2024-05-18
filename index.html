@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Table</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Подключение библиотеки html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <!-- Подключение библиотеки FileSaver.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <div class="center-container">
@@ -13,8 +17,9 @@
         <button id="createTable">Создать таблицу</button>
         <button id="clearTable">Очистить таблицу</button>
     </div>
-    <div id="tableContainer"></div>
-    <button id="autoFill" class="center-container butts">Автозаполнение пустых ячеек</button>
+    <div id="tableContainer" class="center-container butts"></div>
+    <button id="autoFill">Автозаполнение пустых ячеек</button>
+    <button id="downloadImage">Скачать как изображение</button>
 
     <script src="script.js"></script>
 </body>
