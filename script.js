@@ -155,3 +155,45 @@ function downloadTableImage() {
         }
     });
 }
+
+// Инициализируем переменную для отслеживания текущей темы (светлая/темная)
+let isDarkTheme = false;
+
+// Добавляем обработчик событий для кнопки переключения темы
+document.getElementById('toggleTheme').addEventListener('click', toggleTheme);
+
+// Функция для переключения темы всех таблиц на сайте
+function toggleTheme() {
+    isDarkTheme = !isDarkTheme;
+    const tables = document.querySelectorAll('table'); // Получаем все элементы таблиц на странице
+    const toggleButton = document.getElementById('toggleTheme'); // Получаем элемент кнопки для переключения темы
+    
+    // Если тема темная, устанавливаем темные стили
+    if (isDarkTheme) {
+        tables.forEach(table => {
+            table.style.backgroundColor = 'black'; // Устанавливаем черный фон таблицы
+            table.querySelectorAll('td').forEach(cell => {
+                if (!cell.classList.contains('selected')) {
+                    cell.style.backgroundColor = 'black'; // Устанавливаем черный фон ячеек
+                    cell.style.color = 'white'; // Устанавливаем белый текст в ячейках
+                    cell.style.borderColor = 'white'; // Устанавливаем белые границы ячеек
+                }
+            });
+        });
+        toggleButton.style.backgroundColor = '#f0f0f0'; // Устанавливаем белый фон кнопки
+        toggleButton.style.color = 'black'; // Устанавливаем черный текст кнопки
+    } else { // Если тема светлая, устанавливаем светлые стили
+        tables.forEach(table => {
+            table.style.backgroundColor = 'white'; // Устанавливаем белый фон таблицы
+            table.querySelectorAll('td').forEach(cell => {
+                if (!cell.classList.contains('selected')) {
+                    cell.style.backgroundColor = 'white'; // Устанавливаем белый фон ячеек
+                    cell.style.color = 'black'; // Устанавливаем черный текст в ячейках
+                    cell.style.borderColor = 'darkgray'; // Устанавливаем черные границы ячеек
+                }
+            });
+        });
+        toggleButton.style.backgroundColor = 'gray'; // Устанавливаем черный фон кнопки
+        toggleButton.style.color = 'white'; // Устанавливаем белый текст кнопки
+    }
+}

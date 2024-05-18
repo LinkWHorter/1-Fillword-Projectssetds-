@@ -29,6 +29,14 @@ button {
     max-width: 100%; /* Ширина таблицы не будет превышать ширину экрана */
 }
 
+#toggleTheme {
+    border-radius: 4px;
+}
+
+.buttons-changing {
+    flex-direction: row;
+}
+
 table {
     border-collapse: collapse;
     margin: 2px;
@@ -47,5 +55,6 @@ td {
 }
 
 .selected {
-    background-color: green;
+    background-color: green !important;
+    color: white !important;
 }
