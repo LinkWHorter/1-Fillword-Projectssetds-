@@ -268,10 +268,18 @@ function handleInputChange() {
 
 function pasteFromClipboard() {
     navigator.clipboard.readText().then(text => {
-        if (/^\{\d+;.*\}$/.test(text)) {
-            document.getElementById('tableDataInput').value = text; // Обновляем значение input
-            isInputActive = true;
-            handleInputChange(); // Затем обновляем таблицу
+        const match = text.match(/^\{(\d+);(.+)\}$/);
+        if (match) {
+            const size = parseInt(match[1]);
+            if (!isNaN(size)) {
+                document.getElementById('sizeInput').value = size; // Устанавливаем размер в input #sizeInput
+                createTable(); // Пересоздаем таблицу с новым размером
+                document.getElementById('tableDataInput').value = text; // Устанавливаем текст в input #tableDataInput
+                isInputActive = true;
+                handleInputChange(); // Обновляем таблицу на основе данных из input #tableDataInput
+            } else {
+                alert('Некорректный формат данных для вставки.');
+            }
         } else {
             alert('Некорректный формат данных для вставки.');
         }
