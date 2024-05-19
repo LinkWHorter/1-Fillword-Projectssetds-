@@ -33,8 +33,14 @@ button {
     border-radius: 4px;
 }
 
-.buttons-changing {
+.buttons-changing, .buttons-select {
+    display: flex;
     flex-direction: row;
+}
+
+.buttons-select button {
+    width: 30px;
+    height: 30px;
 }
 
 table {

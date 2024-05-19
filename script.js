@@ -2,6 +2,11 @@
 document.getElementById('createTable').addEventListener('click', createTable);
 document.getElementById('clearTable').addEventListener('click', clearTable);
 document.getElementById('autoFill').addEventListener('click', autoFillEmptyCells);
+document.getElementById('tableDataInput').addEventListener('input', handleInputChange);
+document.getElementById('tableDataInput').addEventListener('focus', () => { isInputActive = true; });
+document.getElementById('tableDataInput').addEventListener('blur', () => { isInputActive = false; updateInputFromTable(); });
+document.getElementById('copyToClipboard').addEventListener('click', copyToClipboard);
+document.getElementById('pasteFromClipboard').addEventListener('click', pasteFromClipboard);
 document.getElementById('downloadImage').addEventListener('click', downloadTableImage);
 document.addEventListener('keypress', handleKeyPress);
 document.addEventListener('mousedown', handleMouseDownOutsideTable);
@@ -10,6 +15,7 @@ let currentCellIndex = 0;
 let cells = [];
 let selectedCells = [];
 let isMouseDown = false;
+let isInputActive = false;
 let isRightMouseDown = false;
 
 function createTable() {
@@ -63,6 +69,8 @@ function createTable() {
         isMouseDown = false;
         isRightMouseDown = false;
     });
+
+    updateInputFromTable(); // Обновляем данные в инпуте после создания таблицы
 }
 
 function handleMouseDownOutsideTable(event) {
@@ -82,6 +90,7 @@ function toggleCellSelection(cell, select = true) {
         cell.classList.remove('selected');
         selectedCells = selectedCells.filter(selectedCell => selectedCell !== cell);
     }
+    updateInputFromTable(); // Обновляем данные в инпуте после создания таблицы
 }
 
 function handleKeyPress(event) {
@@ -95,12 +104,16 @@ function handleKeyPress(event) {
             selectedCells.push(targetCell);
         }
     }
+    if (!isInputActive) {
+        updateInputFromTable(); // Обновляем данные в инпуте при вводе символов, если input не активен
+    }
 }
 
 function clearCell(cell) {
     cell.textContent = '';
     cell.classList.remove('selected');
     selectedCells = selectedCells.filter(selectedCell => selectedCell !== cell);
+    updateInputFromTable(); // Обновляем данные в инпуте после очистки ячейки
 }
 
 function clearTable() {
@@ -109,6 +122,7 @@ function clearTable() {
     cells = [];
     selectedCells = [];
     currentCellIndex = 0;
+    updateInputFromTable(); // Обновляем данные в инпуте после очистки таблицы
 }
 
 function clearSelectedCells() {
@@ -124,6 +138,7 @@ function autoFillEmptyCells() {
             cell.textContent = randomChar;
         }
     });
+    updateInputFromTable(); // Обновляем данные в инпуте после автозаполнения ячеек
 }
 
 function downloadTableImage() {
@@ -196,4 +211,70 @@ function toggleTheme() {
         toggleButton.style.backgroundColor = 'gray'; // Устанавливаем черный фон кнопки
         toggleButton.style.color = 'white'; // Устанавливаем белый текст кнопки
     }
+}
+
+function updateInputFromTable() {
+    const size = cells.length ? Math.sqrt(cells.length) : 0;
+    let data = `{${size};`;
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            const cell = cells[i * size + j];
+            const char = cell.textContent || '_';
+            data += char.toLowerCase() + (j < size - 1 ? ',' : '');
+        }
+        data += i < size - 1 ? ';' : '';
+    }
+    data += '}';
+    document.getElementById('tableDataInput').value = data;
+}
+
+function updateTableFromInput() {
+    if (!isInputActive) return;
+    const inputData = document.getElementById('tableDataInput').value;
+    const match = inputData.match(/^\{(\d+);(.+)\}$/);
+    if (!match) return;
+
+    const size = parseInt(match[1]);
+    const rows = match[2].split(';');
+
+    if (isNaN(size) || rows.length !== size) return;
+
+    createTable(); // Пересоздаем таблицу, если размер изменился
+    cells = [];
+    selectedCells = [];
+
+    for (let i = 0; i < size; i++) {
+        const row = rows[i].split(',');
+        for (let j = 0; j < size; j++) {
+            const cell = document.querySelectorAll('table tr')[i].cells[j];
+            cell.textContent = row[j] === '_' ? '' : row[j].toUpperCase();
+            cells.push(cell);
+        }
+    }
+}
+
+function copyToClipboard() {
+    const tableDataInput = document.getElementById('tableDataInput');
+    tableDataInput.select();
+    document.execCommand('copy');
+}
+
+function handleInputChange() {
+    if (isInputActive) {
+        updateTableFromInput(); // Обновляем таблицу при изменении данных в инпуте, если input активен
+        updateInputFromTable(); // Сразу обновляем данные в инпуте после обновления таблицы
+    }
+}
+
+function pasteFromClipboard() {
+    navigator.clipboard.readText().then(text => {
+        if (/^\{\d+;.*\}$/.test(text)) {
+            document.getElementById('tableDataInput').value = text; // Обновляем значение input
+            updateTableFromInput(); // Затем обновляем таблицу
+        } else {
+            alert('Некорректный формат данных для вставки.');
+        }
+    }).catch(err => {
+        console.error('Failed to read clipboard contents: ', err);
+    });
 }
