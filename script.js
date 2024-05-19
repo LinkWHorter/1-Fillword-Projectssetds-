@@ -277,6 +277,7 @@ function pasteFromClipboard() {
                 document.getElementById('tableDataInput').value = text; // Устанавливаем текст в input #tableDataInput
                 isInputActive = true;
                 handleInputChange(); // Обновляем таблицу на основе данных из input #tableDataInput
+                isInputActive = false;
             } else {
                 alert('Некорректный формат данных для вставки.');
             }
