@@ -270,7 +270,8 @@ function pasteFromClipboard() {
     navigator.clipboard.readText().then(text => {
         if (/^\{\d+;.*\}$/.test(text)) {
             document.getElementById('tableDataInput').value = text; // Обновляем значение input
-            updateTableFromInput(); // Затем обновляем таблицу
+            isInputActive = true;
+            handleInputChange(); // Затем обновляем таблицу
         } else {
             alert('Некорректный формат данных для вставки.');
         }
