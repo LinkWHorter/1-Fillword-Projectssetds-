@@ -9,6 +9,7 @@ body {
 
 button {
     margin: 3px;
+    user-select: none;
 }
 
 .butts {
