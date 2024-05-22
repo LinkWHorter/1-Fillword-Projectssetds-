@@ -10,6 +10,7 @@ document.getElementById('pasteFromClipboard').addEventListener('click', pasteFro
 document.getElementById('downloadImage').addEventListener('click', downloadTableImage);
 document.addEventListener('keypress', handleKeyPress);
 document.addEventListener('mousedown', handleMouseDownOutsideTable);
+document.getElementById('En-select').addEventListener('click', ENletting);
 
 let currentCellIndex = 0;
 let cells = [];
@@ -95,7 +96,7 @@ function toggleCellSelection(cell, select = true) {
 
 function handleKeyPress(event) {
     const char = event.key;
-    if (!/^[а-яА-ЯёЁ]$/.test(char)) return;
+    if (!/^[а-яА-ЯёЁa-zA-Z]$/.test(char)) return;
 
     const targetCell = selectedCells.length > 0 ? selectedCells.shift() : cells[currentCellIndex++];
     if (targetCell) {
@@ -130,8 +131,19 @@ function clearSelectedCells() {
     selectedCells = [];
 }
 
+let isENlangu = false;
+
+function ENletting() {
+    isENlangu = !isENlangu;
+    const ENselect = document.getElementById('En-select');
+
+    if (isENlangu) {ENselect.innerHTML = 'RU';}
+    else {ENselect.innerHTML = 'EN';}
+}
+
 function autoFillEmptyCells() {
-    const alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя';
+    if (!isENlangu)
+    { const alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'; 
     cells.forEach(cell => {
         if (!cell.textContent) {
             const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
@@ -139,6 +151,18 @@ function autoFillEmptyCells() {
         }
     });
     updateInputFromTable(); // Обновляем данные в инпуте после автозаполнения ячеек
+    }
+
+    else if (isENlangu)
+    { const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    cells.forEach(cell => {
+        if (!cell.textContent) {
+            const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+            cell.textContent = randomChar;
+        }
+    });
+    updateInputFromTable(); // Обновляем данные в инпуте после автозаполнения ячеек
+    }
 }
 
 function downloadTableImage() {
