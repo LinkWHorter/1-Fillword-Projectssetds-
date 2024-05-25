@@ -96,7 +96,7 @@ function toggleCellSelection(cell, select = true) {
 
 function handleKeyPress(event) {
     const char = event.key;
-    if (!/^[а-яА-ЯёЁa-zA-Z]$/.test(char)) return;
+    if (!/^[а-яА-ЯёЁa-zA-Z0-9]$/.test(char)) return;
 
     const targetCell = selectedCells.length > 0 ? selectedCells.shift() : cells[currentCellIndex++];
     if (targetCell) {
