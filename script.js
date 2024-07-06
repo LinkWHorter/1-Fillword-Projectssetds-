@@ -210,12 +210,12 @@ function toggleTheme() {
     // Если тема темная, устанавливаем темные стили
     if (isDarkTheme) {
         tables.forEach(table => {
-            table.style.backgroundColor = 'black'; // Устанавливаем черный фон таблицы
+            table.style.backgroundColor = 'rgb(80,80,80)'; // Устанавливаем черный фон таблицы
             table.querySelectorAll('td').forEach(cell => {
                 if (!cell.classList.contains('selected')) {
-                    cell.style.backgroundColor = 'black'; // Устанавливаем черный фон ячеек
+                    cell.style.backgroundColor = 'rgb(80,80,80)'; // Устанавливаем черный фон ячеек
                     cell.style.color = 'white'; // Устанавливаем белый текст в ячейках
-                    cell.style.borderColor = 'white'; // Устанавливаем белые границы ячеек
+                    cell.style.borderColor = 'whitesmoke'; // Устанавливаем белые границы ячеек
                 }
             });
         });
