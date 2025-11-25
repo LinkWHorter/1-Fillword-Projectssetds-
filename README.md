@@ -10,5 +10,5 @@ Project features:
   <i>where: n – rows of table, p – columns of table, '_' – symbol of empty cell and sign which mean a data containing.</i><br>
   Data containing is realised in next format:<br>
   <b><i>{5;f,h,k,y,g;v,c,w,k,z;n,j,v,k,d;s,b,h,g,w;f,o,t,q,m}</i></b>
-</p>  
+</p>   
 - two languages modes of table creating.
